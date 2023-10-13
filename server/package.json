@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "asyncawait": "^3.0.0",
     "axios": "^1.4.0",
     "body-parser": "^1.20.1",
     "concurrently": "^8.0.1",
