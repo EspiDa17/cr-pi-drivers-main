@@ -6,48 +6,49 @@
 
 const axios = require('axios');
 
-const url = 'http://localhost:5000/drivers?name.forename=';
+//const url = 'http://localhost:5000/drivers?name.forename=';
+const url = 'http://localhost:5000/drivers';
 
 // Request --> Realiza solicitudes HTTP al servidor
 // Response --> Envía las respuestas al cliente
 
-// Esta función hace una request a la API local y obtiene el detalle de un driver según el name que viene por params
+// Esta función hace una request a la API local y obtiene los drivers que contengan el name que llega por params 
 const getDriverByName = async (req, res) => {
 
-    //const { name } = req.params;
-    const name = 'Le';
+    const { name } = req.params;
+    //const name = 'IS';
     console.log('==============================================');
-    console.log('Solicitaron el driver con el nombre --> ' + name);
+    console.log('Solicitaron el driver con la palabra --> ' + name);
 
     try {
-        // Variable para almacenar los drivers encontrados con ese name
-        let allDriversName = [];
+        //const datosPeticion = await axios(`${url}${name}`)
+        const datosPeticion = await axios.get(`${url}`);
 
-        // Petición asincrónica a la API local buscando un id en particular
-        const datosPeticion = await axios(`${url}${name}`)
-        allDriversName.push(datosPeticion);
-
-        // .data.results --> Necesito acceder hasta acá para acceder a la info que necesito de cada caracter
-        // map --> Solo necesito traerme 7 propiedades de los personajes
-        let allDriversName1 = allDriversName.map(response => response.data.map(driver => {
+        const allDrivers = datosPeticion.data.map(driver => {
             return {
                 name: driver.name.forename,
                 image : driver.image.url,
                 teams : driver.teams
             }
-        }))
+        });
 
-        // Como en el momento me está llegando un arreglo dentro de otro arreglo
-        // Necesito que todos los objetos me queden en un solo arreglo
-        // .flat --> Si hay varios arreglos anidados los saca a un solo arreglo
-        let allDriversName2 = allDriversName1.flat();
+        // Expresión regular para realizar la búsqueda
+        const regex = new RegExp(name, 'i'); // 'i' indica case-insensitive
 
-        //console.log(allDriversName2);
-        res.status(200).send(allDriversName2);
-        console.log('==============================================');       
-    }
-    
-    catch (error) {
+        // Filtra los conductores cuyo forename coincide con la expresión regular
+        const filteredDrivers = allDrivers.filter(driver => 
+            regex.test(driver.name)
+        );
+        
+        // Solo necesito los primeros quince drivers
+        const quinceDrivers = filteredDrivers.slice(0, 15);
+
+        //console.log(quinceDrivers);
+
+        res.status(200).send(quinceDrivers);
+        console.log('==============================================');
+
+    } catch (error) {
         // Responder directamente en la ruta un mensaje 404 de error
         return {error: error.message}
     }
@@ -55,5 +56,4 @@ const getDriverByName = async (req, res) => {
 
 //getDriverByName();
 
-// NODE JS
 module.exports = getDriverByName;

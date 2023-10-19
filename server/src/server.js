@@ -15,10 +15,6 @@ const cors = require('cors');
 // Para hacer las peticiones desde el front
 const { router } = require('./routes/index.js');
 
-//require('./db_Connection.js');
-// Se destructura porque es un objeto
-const { sequelize } = require('./db.js');
-
 //EXPRESS --> Creo el servidor con express y el puerto donde va a estar
 const server = express();
 const PORT = 3010;
@@ -77,23 +73,6 @@ server.use((req, res, next) => {
 
 server.use('/drivers', router);
 
-
-//------------------------------------------------------------------------------------------------------------------------
-//                                      SINCRONIZACIÓN CON SEQUELIZE             
-//------------------------------------------------------------------------------------------------------------------------
-// force: true --> Cuando se baje el back se van a borrar los registros y cuando se vuelva a subir vamos a tener nuevos campos para agregar
-// sequelize.sync({force: true}).then(() => {
-  
-//   console.log('Base de datos local sincronizada');
-  
-//   // EXPRESS --> 
-//   // Listen --> Inicia el servidor HTTP y escucha las solicitudes para enviar 
-//   //            las respectivas respuestas
-//   server.listen(PORT, () => {
-//      console.log('Servidor "' + server.name + '" levantado en el puerto: ' + PORT);
-//      console.log('Escuchando el front...');
-//   });
-// })
 
 
 

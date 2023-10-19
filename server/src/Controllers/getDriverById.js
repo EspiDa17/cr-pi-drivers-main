@@ -14,6 +14,7 @@ const url = 'http://localhost:5000/drivers/';
 // Esta función hace una request a la API local y obtiene el detalle de un driver según el id que viene por params
 const getDriverById = async (req, res) => {
 
+    //const id = 1;
     const { id } = req.params;
     console.log('============================================');
     console.log('Solicitaron el driver con el id --> ' + id);

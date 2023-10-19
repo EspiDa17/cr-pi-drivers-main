@@ -11,32 +11,32 @@ module.exports = (sequelize) => {
       autoIncrement: true
     },
     
-    nombre: {
+    name: {
       type: DataTypes.STRING,
       allowNull: false
     },
 
-    apellido: {
+    lastName: {
       type: DataTypes.STRING,
       allowNull: false
     },
 
-    descripción: {
+    description: {
       type: DataTypes.STRING,
       allowNull: false
     },
 
-    imagen: {
+    image: {
       type: DataTypes.STRING,
       allowNull: false
     },
 
-    nacionalidad: {
+    nationality: {
       type: DataTypes.STRING,
       allowNull: false
     },
 
-    fechaDeNacimiento: {
+    birthdate: {
       type: DataTypes.STRING,
       allowNull: false
     },
